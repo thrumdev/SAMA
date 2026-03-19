@@ -1,4 +1,4 @@
-# SAMA
+# SAMA: Factorized Semantic Anchoring and Motion Alignment for Instruction-Guided Video Editing
 
 <div align="center">
   <a href="https://arxiv.org/" target="_blank"><img src="https://img.shields.io/badge/Paper-b31b1b.svg?logo=arxiv&logoColor=white" height="22px"></a>
@@ -6,6 +6,24 @@
   <a href="https://huggingface.co/syxbb/SAMA-14B" target="_blank"><img src="https://img.shields.io/badge/Model-f59e0b.svg?logo=huggingface&logoColor=white" height="22px"></a>
   <a href="https://huggingface.co/datasets/syxbb/SAMA-edit-filtered-1M" target="_blank"><img src="https://img.shields.io/badge/Dataset-2563eb.svg?logo=huggingface&logoColor=white" height="22px"></a>
   <a href="https://github.com/Cynthiazxy123/SAMA" target="_blank"><img src="https://img.shields.io/badge/Code-111111.svg?logo=github&logoColor=white" height="22px"></a>
+</div>
+
+<div align="center">
+  Xinyao Zhang<sup>1,2,*</sup>, Wenkai Dong<sup>1,*</sup>, Yuxin Song<sup>1,*,&dagger;</sup>, Bo Fang<sup>1,3</sup>,
+  Qi Zhang<sup>1</sup>, Jing Wang<sup>1,2</sup>, Fan Chen<sup>1</sup>, Hui Zhang<sup>1</sup>,
+  Haocheng Feng<sup>1</sup>, Yu Lu<sup>4,&Dagger;</sup>, Hang Zhou<sup>1</sup>, Chun Yuan<sup>2</sup>,
+  Jingdong Wang<sup>1</sup>
+</div>
+
+<div align="center">
+  <sup>1</sup> Baidu Inc &nbsp;&nbsp;
+  <sup>2</sup> Tsinghua University &nbsp;&nbsp;
+  <sup>3</sup> City University of Hong Kong &nbsp;&nbsp;
+  <sup>4</sup> Zhejiang University
+</div>
+
+<div align="center">
+  * Equal Contribution &nbsp;&nbsp; &dagger; Project leader &nbsp;&nbsp; &Dagger; Corresponding Author
 </div>
 
 Official inference code for **SAMA: Factorized Semantic Anchoring and Motion Alignment for Instruction-Guided Video Editing**.

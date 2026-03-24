@@ -49,6 +49,7 @@ Current instruction-guided video editing models struggle to simultaneously balan
 
 ## 📰 News
 
+- 🔥 2026.03.24 [SAMA-ComfyUI](https://github.com/Cynthiazxy123/SAMA-ComfyUI-official) is open-sourced at [Cynthiazxy123/SAMA-ComfyUI-official](https://github.com/Cynthiazxy123/SAMA-ComfyUI-official).
 - 🔥 2026.03.20 Release paper.
 
 ## 📊 Benchmark Highlight
@@ -149,6 +150,15 @@ huggingface-cli download syxbb/SAMA-14B --local-dir ./models/SAMA-14B
 | --- | --- | --- |
 | SAMA-5B | Coming soon | Coming soon |
 | SAMA-14B | Available | [syxbb/SAMA-14B](https://huggingface.co/syxbb/SAMA-14B) |
+
+## 🎛️ ComfyUI Workflow
+
+We also released an official ComfyUI integration for SAMA:
+
+- Repository: [Cynthiazxy123/SAMA-ComfyUI-official](https://github.com/Cynthiazxy123/SAMA-ComfyUI-official)
+- Provides a ready-to-use SAMA workflow for ComfyUI video editing
+- Supports loading the released `SAMA-14B` checkpoint with the Wan base model
+- Includes video input, editing, export, and preview nodes for an end-to-end editing workflow
 
 ## 🙏 Acknowledgement
 

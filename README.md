@@ -50,6 +50,7 @@ Current instruction-guided video editing models struggle to simultaneously balan
 ## 📰 News
 
 - 🔥 2026.03.24 [SAMA-ComfyUI](https://github.com/Cynthiazxy123/SAMA-ComfyUI-official) is open-sourced at [Cynthiazxy123/SAMA-ComfyUI-official](https://github.com/Cynthiazxy123/SAMA-ComfyUI-official).
+- 🔥 2026.03.21 [SAMA-14B](https://huggingface.co/syxbb/SAMA-14B) is released at [syxbb/SAMA-14B](https://huggingface.co/syxbb/SAMA-14B).
 - 🔥 2026.03.20 Release paper.
 
 ## 📊 Benchmark Highlight

@@ -169,13 +169,10 @@ We also released an official ComfyUI integration for SAMA:
 ## 📚 Citation
 
 ```bibtex
-@misc{zhang2026samafactorizedsemanticanchoring,
-      title={SAMA: Factorized Semantic Anchoring and Motion Alignment for Instruction-Guided Video Editing},
-      author={Xinyao Zhang and Wenkai Dong and Yuxin Song and Bo Fang and Qi Zhang and Jing Wang and Fan Chen and Hui Zhang and Haocheng Feng and Yu Lu and Hang Zhou and Chun Yuan and Jingdong Wang},
-      year={2026},
-      eprint={2603.19228},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2603.19228},
+@article{zhang2026sama,
+  title={SAMA: Factorized Semantic Anchoring and Motion Alignment for Instruction-Guided Video Editing},
+  author={Zhang, Xinyao and Dong, Wenkai and Song, Yuxin and Fang, Bo and Zhang, Qi and Wang, Jing and Chen, Fan and Zhang, Hui and Feng, Haocheng and Lu, Yu and others},
+  journal={arXiv preprint arXiv:2603.19228},
+  year={2026}
 }
 ```

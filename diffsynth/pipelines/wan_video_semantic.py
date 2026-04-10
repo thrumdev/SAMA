@@ -758,7 +758,7 @@ class WanVideoPipeline(BasePipeline):
                     **models,
                     **kw,
                     timestep=timestep,
-                    # TODO: r_timestep + meanflow solver
+                    r_timestep=timestep,
                     source_concat_mode=self.source_concat_mode,
                     use_source_attention_mask=self.use_source_attention_mask,
                     semantic_tokens_noised=semantic_tokens_noised,

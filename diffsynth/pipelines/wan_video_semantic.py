@@ -758,7 +758,7 @@ class WanVideoPipeline(BasePipeline):
                     **models,
                     **kw,
                     timestep=timestep,
-                    r_timestep=timestep,
+                    r_timestep=None,
                     source_concat_mode=self.source_concat_mode,
                     use_source_attention_mask=self.use_source_attention_mask,
                     semantic_tokens_noised=semantic_tokens_noised,
@@ -1186,10 +1186,8 @@ def model_fn_wan_video(
     if r_timestep is not None:
         assert r_timestep >= timestep, "r_timestep must be greater than or equal to timestep"
         t_r = dit.time_embedding(sinusoidal_embedding_1d(dit.freq_dim, r_timestep))
-        t_mod_r = dit.time_projection(t_r).unflatten(1, (6, dit.dim))
+        t_mod_r = dit.r_projection(t_r).unflatten(1, (6, dit.dim))
         t_mod = t_mod + t_mod_r # addition of timestep AdaLN factors, has precedent in pMF codebase
-    else:
-        raise ValueError("r_timestep is required for meanflow")
 
     if motion_bucket_id is not None and motion_controller is not None:
         t_mod = t_mod + motion_controller(motion_bucket_id).unflatten(1, (6, dit.dim))

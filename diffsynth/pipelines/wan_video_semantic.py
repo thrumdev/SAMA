@@ -540,8 +540,8 @@ class WanVideoPipeline(BasePipeline):
                     nn.Linear(int(pipe.dit.dim), int(pipe.dit.dim) * 6),
                 ).to(device=pipe.device, dtype=pipe.torch_dtype)
 
-                nn.init.zero_(pipe.dit.r_projection[1].weight)
-                nn.init.zero_(pipe.dit.r_projection[1].bias)
+                nn.init.zeros_(pipe.dit.r_projection[1].weight)
+                nn.init.zeros_(pipe.dit.r_projection[1].bias)
 
         # Adjust DiT model input dimension for channel concatenation mode
         if source_concat_mode == "channel":

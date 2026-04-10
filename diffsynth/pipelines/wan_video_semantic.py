@@ -533,6 +533,16 @@ class WanVideoPipeline(BasePipeline):
                     device=pipe.device, dtype=pipe.torch_dtype
                 )
 
+            # lazily attach r_projection for meanflow training goal.
+            if not hasattr(pipe.dit, "r_projection") or pipe.dit.r_projection is None:
+                pipe.dit.r_projection = nn.Sequential(
+                    nn.SiLU(),
+                    nn.Linear(int(pipe.dit.dim), int(pipe.dit.dim) * 6),
+                ).to(device=pipe.device, dtype=pipe.torch_dtype)
+
+                nn.init.zero_(pipe.dit.r_projection[1].weight)
+                nn.init.zero_(pipe.dit.r_projection[1].bias)
+
         # Adjust DiT model input dimension for channel concatenation mode
         if source_concat_mode == "channel":
             pipe._adjust_dit_input_dim_for_channel_concat()
@@ -725,7 +735,7 @@ class WanVideoPipeline(BasePipeline):
             dit_dim = int(models["dit"].dim)
             B = int(inputs_shared.get("batch_size", 1) or 1)
             N = int(inputs_shared.get("semantic_token_count") or inputs_shared.get("joint_semantic_token_count") or 65) #65 260
-            semantic_latents = torch.randn((B, N, siglip_dim), device=self.device, dtype=self.torch_dtype)#####纯噪声
+            semantic_latents = torch.randn((B, N, siglip_dim), device=self.device, dtype=self.torch_dtype)#####纯噪声 
 
         total_begin = time.time()
         for progress_id, timestep in enumerate(progress_bar_cmd(self.scheduler.timesteps)):
@@ -747,6 +757,7 @@ class WanVideoPipeline(BasePipeline):
                     **models,
                     **kw,
                     timestep=timestep,
+                    # TODO: r_timestep + meanflow solver
                     source_concat_mode=self.source_concat_mode,
                     use_source_attention_mask=self.use_source_attention_mask,
                     semantic_tokens_noised=semantic_tokens_noised,
@@ -1092,6 +1103,7 @@ def model_fn_wan_video(
     animate_adapter: WanAnimateAdapter = None,
     latents: torch.Tensor = None,
     timestep: torch.Tensor = None,
+    r_timestep: torch.Tensor = None,
     context: torch.Tensor = None,
     clip_feature: Optional[torch.Tensor] = None,
     y: Optional[torch.Tensor] = None,
@@ -1167,6 +1179,14 @@ def model_fn_wan_video(
     else:
         t = dit.time_embedding(sinusoidal_embedding_1d(dit.freq_dim, timestep))
         t_mod = dit.time_projection(t).unflatten(1, (6, dit.dim))
+
+    if r_timestep is not None:
+        assert r_timestep >= timestep, "r_timestep must be greater than or equal to timestep"
+        t_r = dit.time_embedding(sinusoidal_embedding_1d(dit.freq_dim, r_timestep))
+        t_mod_r = dit.time_projection(t_r).unflatten(1, (6, dit.dim))
+        t_mod = t_mod + t_mod_r # addition of timestep AdaLN factors, has precedent in pMF codebase
+    else:
+        raise ValueError("r_timestep is required for meanflow")
 
     if motion_bucket_id is not None and motion_controller is not None:
         t_mod = t_mod + motion_controller(motion_bucket_id).unflatten(1, (6, dit.dim))

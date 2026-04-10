@@ -644,6 +644,7 @@ class WanVideoPipeline(BasePipeline):
         tea_cache_model_id: Optional[str] = "",
         # progress_bar
         progress_bar_cmd=tqdm,
+        return_semantic=False,
     ):
         timing_enabled = os.environ.get("WAN_DEBUG_TIMING") == "1"
         if timing_enabled:
@@ -864,6 +865,8 @@ class WanVideoPipeline(BasePipeline):
         )
         video = self.vae_output_to_video(video)
         self.load_models_to_device([])
+        if return_semantic:
+            return video, semantic_latents
         return video
 
 

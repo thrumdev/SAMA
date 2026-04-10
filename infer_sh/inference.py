@@ -44,6 +44,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--tiled", action="store_true", help="Enable tiled inference")
     parser.add_argument("--prompt-prefix", action="store_true", help="Prepend '[Video edit]' to prompt")
     parser.add_argument("--overwrite", action="store_true", help="Overwrite output if it already exists")
+    parser.add_argument("--save-semantic", action="store_true", help="Save semantic latents alongside the video output")
 
     args = parser.parse_args()
 
@@ -305,7 +306,7 @@ def main() -> None:
     
     print(f"[Run] prompt='{prompt}' src='{args.src_video}' frames={len(frames)} "
           f"size={width}x{height} fps={case_fps} seed={args.seed}", flush=True)
-    video = pipe(
+    out = pipe(
         prompt=prompt,
         negative_prompt=negative_prompt,
         source_video=frames,
@@ -314,11 +315,22 @@ def main() -> None:
         height=height,
         width=width,
         tiled=args.tiled,
+        return_semantic=args.save_semantic,
     )
 
+    if args.save_semantic:
+        video = out[0]
+        print(f"Saving semantic latents with shape {out[1].shape} to disk...")
+        save_semantic_latents(out[1], output_path)
+    else:
+        video = out
     save_video(video, output_path, fps=case_fps, quality=args.quality)
     print(f"[Done] Saved to {output_path}", flush=True)
 
+def save_semantic_latents(semantic_latents: torch.Tensor, output_path: str) -> None:
+    base, ext = os.path.splitext(output_path)
+    semantic_path = f"{base}_semantic.pt"
+    torch.save(semantic_latents.cpu(), semantic_path)
 
 if __name__ == "__main__":
     main()
